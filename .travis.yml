@@ -1,5 +1,19 @@
 language: java
-jdk: 
- - oraclejdk8
- - openjdk8
- - oraclejdk9
+jdk:
+- oraclejdk8
+- openjdk8
+- oraclejdk9
+services:
+- mysql
+before_install:
+- mysql -e 'CREATE DATABASE IF NOT EXISTS hello_test;'
+env:
+- SPRING_DATASOURCE_DRIVERCLASSNAME=com.mysql.jdbc.Driver SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/hello_test
+  SPRING_DATASOURCE_USERNAME="travis" SPRING_DATASOURCE_PASSWORD=""
+deploy:
+  provider: heroku
+  api_key:
+    secure: i1zZkgMv4rYu0Xq0X68Pi18x2DAzqlPpsXv1ZDWOndyNf/LBp08wjKc4fFA92lh0P7Hvy1ULwgMHFIdeQhvPTG5nIcFGC6/R+sTUq42rjksv030Q7C4B9TLLC82+JJqTtsAD4oxRKxg2zUHZiAS7J6bLJsY+ocHelyXGo5IYelP10Q5AHhaLj9IJiQYhLYMXYgsad7E5ZqQdoXpigMdFiX4Oq22Hq4Tw+NAXiWLq36ji0OfAge2GRIH8VEZ49LDsoivOpW+cv5H6io5noN7zsXAJw+t4NgIsWZYiM4+EivW2YOJepECeEt/TjWJY9ARbfMyIj6GOjWcqA8i/eF3qLTtldKxuzz6Fl13W0YW+U34XSn5PwWVDsYqmnbdK5C0kEX+IQ1cFINNn99pr6ubQDM9vJnrtN61SmDrmXnNPfDoKge53NDaBZf87Jx4O5AwOZgA/6wupNkNP9cbUh2b+Xoj3sZGwi9xc7P0eEZMGpN7jlRPve7FxplYwgVinQfJ/XGkKMQvU5p1q3nEjzQJ55VjtgnhG7koj8LfHGsMRXS5nnN75bI7iHq3kDIVT2hsOE9MGoht5VohQBR5CTgsvE4srYs1RnX65VktMz2YMd8f66EXwdSx6PjLLbCngxbmoc+bNY5c4/euCrr4cIfjV6rtLnoX9jdD0HCvNjcWymEk=
+  app: hello-hava
+  on:
+    repo: ernestodtv/hello-java
